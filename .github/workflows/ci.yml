@@ -49,7 +49,7 @@ jobs:
           which migrate 
 
       - name: run migrations
-        run: make migrateup
+        run: make migrateup_prod
 
       - name: Test
         run: make test
