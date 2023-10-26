@@ -24,7 +24,6 @@ jobs:
           POSTGRES_USER: root
           POSTGRES_DB: simple_bank
         # Set health checks to wait until postgres has started
-
         ports:
           - 5432:5432
         options: >-
@@ -35,6 +34,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: set env vars
+        IP_PG: localhost
 
       - name: Set up Go
         uses: actions/setup-go@v4
