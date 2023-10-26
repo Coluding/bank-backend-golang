@@ -14,6 +14,8 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    env:
+      IP_PG: "localhost"
 
     services:
       postgres:
@@ -35,14 +37,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: set env vars
-        IP_PG: localhost
 
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
           go-version: '1.21'
         id: go
+
+
 
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
