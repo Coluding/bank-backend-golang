@@ -1,15 +1,31 @@
 package main
 
 import (
-	"fmt"
+	"database/sql"
+	"github.com/Coluding/udemy_backend/api"
+	db "github.com/Coluding/udemy_backend/db/sqlc"
+	"github.com/Coluding/udemy_backend/util"
+	_ "github.com/lib/pq"
+	"log"
 )
 
 func main() {
-	// Get the database connection from the db package
-	fmt.Println("starting")
+	config, err := util.LoadConfig(".")
+	if err != nil {
+		log.Fatal("cannot load config!", err)
+	}
+	conn, err := sql.Open(config.DBDriver, config.DBSource)
 
-	// Perform database operations here
-	// For example, you can query the database or execute other operations
+	if err != nil {
+		log.Fatal("cannot connect to db", err)
+	}
 
-	fmt.Println("Do something with the database...")
+	store := db.NewStore(conn)
+	server := api.NewServer(store)
+
+	err = server.Start(config.ServerAdress)
+
+	if err != nil {
+		log.Fatal("cannot start server:", err)
+	}
 }

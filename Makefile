@@ -24,4 +24,10 @@ sqlc:
 test:
 	go test -v -cover ./db/sqlc
 
+server:
+	go run main.go
+
+mock:
+	go mockgen -destination db/mock/store.go github.com/Coluding/udemy_backend/db/sqlc Store
+
 .PHONY: postgres createdb migrateup migratedown
